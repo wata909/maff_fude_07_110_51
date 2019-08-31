@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css"/>
 <link rel="stylesheet" href="./plugin/leaflet-gps.css"/>
-<title>農地の区画情報（筆ポリゴン）07/110/52</title>
+<title>農地の区画情報（筆ポリゴン）07/110/51</title>
 <style>
 html,body {
     width: 100%;
@@ -34,7 +34,7 @@ var map = L.map('map',{
     minZoom: 12,
     maxZoom: 18,
     autoZIndex: false,
-}).setView([31.5822, 130.5409], 15) 
+}).setView([33.2066, 130.1072], 14) 
 var hash = new L.Hash(map)
 map.addControl( new L.Control.Gps() )
 
@@ -44,14 +44,14 @@ var  onGsClick = function(e) {
     if (!e.feature) return 
     popup
         .setLatLng(e.latlng)
-        .setContent("<b>FID:</b> "+e.feature.properties.FID+"<br><b>耕地の種類:</b> "+e.feature.properties.LC)
+        .setContent("<b>筆ポリゴンID:</b> "+e.feature.properties.Poly_ID+"<br><b>耕地の種類:</b> "+e.feature.properties.LC)
         .openOn(map);
 }
 
 
 var mvtSource = new L.TileLayer.MVTSource({
     url: "./mvt/{z}/{x}/{y}.pbf",
-    minZoom: 12,
+    minZoom: 14,
     maxZoom: 18,
     zIndex: 3,
 //    debug: true,
@@ -59,7 +59,7 @@ var mvtSource = new L.TileLayer.MVTSource({
     mutexToggle:true,
     attribution: "<a href='http://www.maff.go.jp/j/tokei/porigon/index.html' target='_blank'>出典：「筆ポリゴンデータ」（農林水産省）（R1年6月5日に利用）</a>",
     getIDForLayerFeature: function(feature) {
-        return feature.properties["FID"];
+        return feature.properties["Poly_ID"];
     },
     filter: function(feature, context) {
         if (feature.layer.name === 'fude') {
@@ -121,8 +121,8 @@ var pale = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.pn
             {zIndex: 1, attribution: "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>地理院タイル　淡色地図</a>",
             maxZoom: 18}).addTo(map);
 
-var kagoshima20190704 = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/20190704_kagoshima_chuou_0704do/{z}/{x}/{y}.png', 
-            {zIndex: 2, attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル　令和元年度6月下旬からの大雨 正射画像 鹿児島中央地区（鹿児島県鹿児島市、日置市、南九州市）（2019年7月4日撮影）</a>",
+var kagoshima20190704 = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/20190828kyusyu_sagachiku_0830do_sokuho/{z}/{x}/{y}.png', 
+            {zIndex: 2, attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル　令和元年（2019年）８月の前線に伴う大雨 空中写真 正射画像（速報）佐賀地区（2019年8月30日撮影）</a>",
             maxZoom: 18
             }).addTo(map);
 
